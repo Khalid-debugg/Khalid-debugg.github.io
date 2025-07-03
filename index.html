@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khalid Sherif - Software Engineer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest"></head>
+<body>
+    <!-- Header -->
+    <header id="header" class="header">
+        <nav class="container">
+            <div class="logo" onclick="scrollToSection('hero')">
+                <span class="terminal-cursor">Khalid_Sherif</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="scrollToSection('skills')" class="nav-link">Skills</a></li>
+                <li><a onclick="scrollToSection('projects')" class="nav-link">Projects</a></li>
+                <li><a onclick="scrollToSection('open-source')" class="nav-link">OSC</a></li>
+                <li><a onclick="scrollToSection('experience')" class="nav-link">Experience</a></li>
+                <li><a onclick="scrollToSection('contact')" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="mobile-menu" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="matrix-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="terminal-buttons">
+                                <span class="terminal-button red"></span>
+                                <span class="terminal-button yellow"></span>
+                                <span class="terminal-button green"></span>
+                            </div>
+                            <span class="terminal-title">khalid@portfolio:~$</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">whoami</span>
+                            </div>
+                            <h1 class="hero-title" id="heroTitle"></h1>
+                            
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">cat role.txt</span>
+                            </div>
+                            <p class="hero-subtitle neon-glow">Software Engineer</p>
+                            
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">cat about.md</span>
+                            </div>
+                            <p class="hero-description">
+                               I'm a software engineer with a degree in Computer Science, and a strong passion for front-end development. Over the years, I've built hands-on experience through internships, freelance work, side projects, and open-source contributions. I enjoy crafting clean, user-friendly interfaces and solving complex problems that make people's lives easier. Whether it's developing a sleek UI or diving deep into logic-heavy challenges, I strive to build software that's both beautiful and impactful.
+                            </p>
+                            
+                            <div class="terminal-line">
+                                <span class="prompt">$</span>
+                                <span class="command">cat brief.js</span>
+                            </div>
+                            <div class="code-content">
+                                <p class="code-line">
+                                    <span class="line-number">01</span>
+                                    <span class="keyword">const</span> <span class="variable">developer</span> = {
+                                </p>
+                                <p class="code-line">
+                                    <span class="line-number">02</span>
+                                    &nbsp;&nbsp;<span class="property">name</span>: <span class="string">"Khalid Sherif"</span>,
+                                </p>
+                                <p class="code-line">
+                                    <span class="line-number">03</span>
+                                    &nbsp;&nbsp;<span class="property">role</span>: <span class="string">"Software Engineer"</span>,
+                                </p>
+                                <p class="code-line">
+                                    <span class="line-number">04</span>
+                                    &nbsp;&nbsp;<span class="property">experience</span>: <span class="number">2</span> + <span class="string">" years"</span>,
+                                </p>
+                                <p class="code-line">
+                                    <span class="line-number">05</span>
+                                    &nbsp;&nbsp;<span class="property">passion</span>: <span class="string">"Building innovative solutions"</span>
+                                </p>
+                                <p class="code-line">
+                                    <span class="line-number">06</span>
+                                    };
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cta-buttons">
+                        <button onclick="scrollToSection('projects')" class="cyber-button">
+                            <span>./view_projects.sh</span>
+                        </button>
+                        <button onclick="scrollToSection('contact')" class="cyber-button secondary">
+                            <span>./contact.sh</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="profile-container">
+                        <div class="profile-frame">
+                            <img src="./assets/me.jpeg" alt="Khalid Sherif" class="profile-img">
+                            <div class="scan-line"></div>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <span class="stat-label">STATUS:</span>
+                                <span class="stat-value online">ONLINE</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">LEVEL:</span>
+                                <span class="stat-value">MID</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-number">01.</span>
+                <span class="neon-glow">Skills</span>
+            </h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <span class="skill-icon">⚙️</span>
+                        <h3>Technical</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Next.js</span>
+                        <span class="skill-tag">Vue.js</span>
+                        <span class="skill-tag">GraphQL</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">SASS</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <span class="skill-icon">🎨</span>
+                        <h3>Soft</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Effective Communicator</span>
+                        <span class="skill-tag">Team-Oriented</span>
+                        <span class="skill-tag">Problem Solver</span>
+                        <span class="skill-tag">Detail-Focused</span>
+                        <span class="skill-tag">Adaptable Learner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-number">02.</span>
+                <span class="neon-glow">Featured_Projects</span>
+            </h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-status">
+                            <span class="status-dot active"></span>
+                            <span>DEPLOYED</span>
+                        </div>
+                        <div class="project-links">
+                            <a  target="_blank" href="https://fora-orpin.vercel.app/" class="project-link">DEMO</a>
+                            <a  target="_blank" href="https://github.com/Khalid-debugg/FORA" class="project-link">GITHUB</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">FORA</h3>
+                        <p class="project-description">
+                            A Social media platform for the football community and a solution for gathering players to enjoy their time playing football
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">ReactQuery</span>
+                            <span class="tech-tag">TailwindCSS</span>
+                            <span class="tech-tag">Appwrite</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-status">
+                            <span class="status-dot active"></span>
+                            <span>DEPLOYED</span>
+                        </div>
+                        <div class="project-links">
+                            <a  target="_blank" href="https://my-dream-place-lac.vercel.app/" class="project-link">DEMO</a>
+                            <a  target="_blank" href="https://github.com/Khalid-debugg/My-Dream-Place" class="project-link">GITHUB</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">My Dream Place</h3>
+                        <p class="project-description">
+                            A hotel booking website that allows users to search and explore hotel rooms effortlessly. It features an intuitive interface with advanced search filters.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">Pinia</span>
+                            <span class="tech-tag">REST API</span>
+                            <span class="tech-tag">TailwindCSS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header" style="display: flex;justify-content: end;">
+                        <div class="project-links">
+                            <a  target="_blank" href="https://github.com/01279410187/ERB-System/tree/development" class="project-link">CODE</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Dar-Elmushaa</h3>
+                        <p class="project-description">
+                           An ERP system that manages multiple departments for the Infantry house organization which is related to the armed forces.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">AntDesgin</span>
+                            <span class="tech-tag">TailwindCSS</span>
+                            <span class="tech-tag">Axios</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- OSC Section -->
+    <section id="open-source" class="projects">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-number">03.</span>
+                <span class="neon-glow">Open_Source_Contributions</span>
+            </h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-status">
+                            <span class="status-dot active"></span>
+                            <span>DEPLOYED</span>
+                        </div>
+                        <div class="project-links">
+                            <a  target="_blank" href="https://www.codecademy.com/resources/docs/lua/mathematical-library/max" class="project-link">DEMO 1</a>
+                            <a  target="_blank" href="https://www.codecademy.com/resources/docs/lua/mathematical-library/mininteger" class="project-link">DEMO 2</a>
+                            <a  target="_blank" href="https://www.codecademy.com/resources/docs/css/display" class="project-link">DEMO 3</a>
+                            <a  target="_blank" href="https://github.com/Codecademy/docs" class="project-link">CODE</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Codecademy</h3>
+                        <p class="project-description">
+                         Contributed to the docs and clarified some features of Lua programming language and fixed a typo in display feature in CSS.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">md</span>
+                            <span class="tech-tag">Lua</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-status">
+                            <span class="status-dot active"></span>
+                            <span>DEPLOYED</span>
+                        </div>
+                        <div class="project-links">
+                            <a target="_blank" href="https://postiz.com/" class="project-link">DEMO</a>
+                            <a target="_blank" href="https://github.com/gitroomhq/postiz-app" class="project-link">CODE</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Postiz App</h3>
+                        <p class="project-description">
+                            Synced registration button with the logic, and fixed UI conflicts
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-status">
+                            <span class="status-dot active"></span>
+                            <span>DEPLOYED</span>
+                        </div>
+                        <div class="project-links">
+                            <a target="_blank" href="https://github.com/illacloud/illa-builder" class="project-link">CODE</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Illa builder</h3>
+                        <p class="project-description">
+                            Created an AI agent that generates stories with maximum 1000 words based on the title.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">md</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-number">04.</span>
+                <span class="neon-glow">Work_Experience</span>
+            </h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <div class="experience-date">Apr 2024 - Jun 2024</div>
+                    <div class="experience-content">
+                        <div class="experience-header">
+                            <h3 class="experience-title">Front end developer</h3>
+                            <span class="experience-company">Infantry house</span>
+                        </div>
+                        <p class="experience-description">
+                           I designed and developed a custom ERP system aimed at streamlining and managing interdepartmental business processes. I worked closely with clients to gather and understand their unique business requirements, enabling me to tailor effective software solutions to their specific needs. Throughout the project, I collaborated with senior developers and gained valuable hands-on experience, particularly in resolving complex version control challenges in a real-world development environment.
+                        </p>
+                        <div class="experience-achievements">
+                            <span class="achievement">Frontend architecture</span>
+                            <span class="achievement">Cross-functional collaboration</span>
+                            <span class="achievement">User experience focus</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="experience-item">
+                    <div class="experience-date">Oct 2023 - Dec 2023</div>
+                    <div class="experience-content">
+                        <div class="experience-header">
+                            <h3 class="experience-title">Frontend Developer Intern</h3>
+                            <span class="experience-company">Algoriza</span>
+                        </div>
+                        <p class="experience-description">
+                            Built responsive web interfaces using React and modern CSS frameworks. 
+                            Gained experience in agile development and version control workflows.
+                        </p>
+                        <div class="experience-achievements">
+                            <span class="achievement">VueJS</span>
+                            <span class="achievement">WebPerformanceOptimization</span>
+                            <span class="achievement">Agile methodology</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="section-number">05.</span>
+                <span class="neon-glow">Get_In_Touch</span>
+            </h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="terminal-contact">
+                        <div class="terminal-header">
+                            <span class="terminal-title">contact.sh</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="contact-item">
+                                <span class="contact-label">EMAIL:</span>
+                                <span class="contact-value">khalidsherif.dev@gmail.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">LOCATION:</span>
+                                <span class="contact-value">Nasr city, Cairo ,Egypt</span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">LINKEDIN:</span>
+                                <span class="contact-value"><a target="_blank" href="https://www.linkedin.com/in/khalidsherif1/" style="color: var(--primary);text-decoration: none;">linkedin.com/in/khalidsherif1</a></span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">GITHUB:</span>
+                                <span class="contact-value"><a target="_blank" href="https://github.com/Khalid-debugg" style="color: var(--primary);text-decoration: none;">github.com/Khalid-debugg</a></span>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">STATUS:</span>
+                                <span class="contact-value online">AVAILABLE FOR HIRE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-header">
+                        <span class="form-title">Send_Message.exe</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">NAME:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">EMAIL:</label>
+                        <input type="email" id="email" name="email" placeholder="your.email@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">SUBJECT:</label>
+                        <input type="text" id="subject" name="subject" placeholder="What's this about?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">MESSAGE:</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="cyber-button submit-btn">
+                        <span>EXECUTE_SEND</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Khalid Sherif. All rights reserved.</p>
+                <p class="footer-subtitle">Built with ❤️ and lots of coffee in the terminal</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
