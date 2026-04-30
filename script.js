@@ -99,9 +99,9 @@ const observer = new IntersectionObserver((entries) => {
   })
 }, observerOptions)
 
-// Observe elements for fade-in animation
+// Observe elements for fade-in animation (carousel cards managed separately)
 document.addEventListener("DOMContentLoaded", () => {
-  const animatedElements = document.querySelectorAll(".skill-category, .project-card, .experience-item")
+  const animatedElements = document.querySelectorAll(".skill-category, .experience-item")
 
   animatedElements.forEach((el) => {
     el.style.opacity = "0"
@@ -110,6 +110,98 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(el)
   })
 })
+
+// Carousel
+function initCarousel(sectionEl) {
+  const track = sectionEl.querySelector(".projects-grid")
+  const viewport = sectionEl.querySelector(".carousel-viewport")
+  const cards = Array.from(sectionEl.querySelectorAll(".project-card"))
+  const prevBtn = sectionEl.querySelector(".carousel-prev")
+  const nextBtn = sectionEl.querySelector(".carousel-next")
+  const dotsEl = sectionEl.querySelector(".carousel-dots")
+
+  if (!track || !viewport || cards.length === 0) return
+
+  const GAP = 24
+  let current = 0
+
+  function getVisible() {
+    const w = window.innerWidth
+    if (w >= 1024) return Math.min(3, cards.length)
+    if (w >= 640) return Math.min(2, cards.length)
+    return 1
+  }
+
+  function getCardWidth() {
+    const visible = getVisible()
+    return (viewport.offsetWidth - GAP * (visible - 1)) / visible
+  }
+
+  function maxIndex() {
+    return Math.max(0, cards.length - getVisible())
+  }
+
+  function setCardWidths() {
+    const w = getCardWidth()
+    cards.forEach((c) => {
+      c.style.width = w + "px"
+      c.style.flex = "0 0 auto"
+      c.style.opacity = "1"
+      c.style.transform = "none"
+    })
+  }
+
+  function goTo(idx) {
+    current = Math.max(0, Math.min(idx, maxIndex()))
+    const w = getCardWidth()
+    track.style.transform = `translateX(-${current * (w + GAP)}px)`
+    prevBtn.disabled = current === 0
+    nextBtn.disabled = current === maxIndex()
+    updateDots()
+  }
+
+  function buildDots() {
+    const total = maxIndex() + 1
+    dotsEl.innerHTML = ""
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement("button")
+      dot.className = "carousel-dot" + (i === current ? " active" : "")
+      dot.setAttribute("aria-label", `Go to slide ${i + 1}`)
+      dot.addEventListener("click", () => goTo(i))
+      dotsEl.appendChild(dot)
+    }
+  }
+
+  function updateDots() {
+    dotsEl.querySelectorAll(".carousel-dot").forEach((d, i) => {
+      d.classList.toggle("active", i === current)
+    })
+  }
+
+  prevBtn.addEventListener("click", () => goTo(current - 1))
+  nextBtn.addEventListener("click", () => goTo(current + 1))
+
+  let touchStartX = 0
+  viewport.addEventListener("touchstart", (e) => { touchStartX = e.touches[0].clientX }, { passive: true })
+  viewport.addEventListener("touchend", (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1))
+  }, { passive: true })
+
+  let resizeTimer
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer)
+    resizeTimer = setTimeout(() => {
+      setCardWidths()
+      buildDots()
+      goTo(Math.min(current, maxIndex()))
+    }, 100)
+  })
+
+  setCardWidths()
+  buildDots()
+  goTo(0)
+}
 
 // Glitch effect for logo
 function addGlitchEffect() {
@@ -287,6 +379,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add cyber text effects
   addCyberTextEffect()
+
+  // Initialize carousels
+  document.querySelectorAll(".projects").forEach((section) => initCarousel(section))
 
   // Close mobile menu when clicking on links
   document.querySelectorAll(".nav-link").forEach((link) => {
