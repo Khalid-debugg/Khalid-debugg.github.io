@@ -1,538 +1,992 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khalid Sherif - Software Engineer Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest"></head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Khalid Sherif — Frontend Engineer / Zine №08</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#eee6d3;
+    --ink:#0a0a0a;
+    --magenta:#e0398c;
+    --cyan:#3ec4dc;
+    --muted:#6b5f4d;
+    --rule:#0a0a0a;
+    --paper:#f4ecd8;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{background:var(--bg)}
+  body{
+    font-family:"Bricolage Grotesque",system-ui,sans-serif;
+    font-variation-settings:"wdth" 92,"wght" 500;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.4;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  /* subtle paper grain */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background-image:
+      radial-gradient(rgba(10,10,10,.045) 1px, transparent 1px),
+      radial-gradient(rgba(10,10,10,.03) 1px, transparent 1px);
+    background-size:3px 3px, 7px 7px;
+    background-position:0 0, 1px 2px;
+    mix-blend-mode:multiply;
+    opacity:.55;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--magenta);color:var(--paper)}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:32px 40px 80px;position:relative;z-index:2}
+  .rule{height:4px;background:var(--ink);border:0;margin:0}
+  .rule.thin{height:2px}
+  .rule.mag{background:var(--magenta)}
+
+  /* ─── ZINE MASTHEAD ─── */
+  .masthead{
+    display:flex;align-items:center;justify-content:space-between;
+    border-top:4px solid var(--ink);border-bottom:2px solid var(--ink);
+    padding:10px 0;font-family:"Space Mono",monospace;
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  }
+  .masthead .lot{display:flex;gap:22px;flex-wrap:wrap}
+  .masthead .lot span b{font-weight:700}
+  .masthead .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--magenta);margin-right:6px;vertical-align:middle}
+
+  /* ─── HERO ─── */
+  .hero{padding:56px 0 40px;position:relative}
+  .hero .tag-row{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-variation-settings:"wdth" 100,"wght" 800;
+    font-size:clamp(72px,15vw,220px);
+    line-height:.82;letter-spacing:-.045em;
+    margin:0;
+    text-transform:lowercase;
+  }
+  .hero h1 .amp{
+    font-family:"DM Serif Display",serif;font-style:italic;font-weight:400;
+    color:var(--magenta);
+    padding:0 .04em;
+  }
+  .hero h1 .strike{position:relative;display:inline-block}
+  .hero h1 .strike::after{
+    content:"";position:absolute;left:-2%;right:-2%;top:52%;height:14px;background:var(--cyan);
+    z-index:-1;transform:rotate(-1.5deg);mix-blend-mode:multiply;
+  }
+  .role{
+    font-family:"DM Serif Display",serif;font-style:italic;font-weight:400;
+    font-size:clamp(28px,4.4vw,54px);line-height:1;
+    margin:22px 0 0;letter-spacing:-.01em;
+  }
+  .role em{color:var(--magenta);font-style:italic}
+
+  .hero-meta{
+    display:grid;grid-template-columns:1.2fr .6fr 1fr;gap:36px;align-items:end;
+    margin-top:44px;padding-top:16px;border-top:2px solid var(--ink);
+  }
+  .hero-meta .col small{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    display:block;margin-bottom:6px;color:var(--muted);
+  }
+  .hero-meta .col p{margin:0;font-size:15px;font-variation-settings:"wdth" 90,"wght" 500}
+  .hero-meta .col a{border-bottom:1.5px solid var(--ink)}
+
+  /* sticker — issue mark */
+  .sticker{
+    position:absolute;width:150px;height:150px;border-radius:50%;
+    background:var(--magenta);color:var(--paper);
+    display:grid;place-content:center;text-align:center;
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    padding:14px;line-height:1.3;
+    box-shadow:6px 6px 0 var(--ink);
+    transform:rotate(-9deg);
+    animation:wobble 6s ease-in-out infinite;
+  }
+  .sticker.hero-sticker{top:64px;right:-14px}
+  .sticker .big{
+    font-family:"DM Serif Display",serif;font-style:italic;font-size:34px;
+    letter-spacing:0;text-transform:none;display:block;margin:6px 0 4px;line-height:1;
+  }
+  @keyframes wobble{
+    0%,100%{transform:rotate(-9deg)}
+    50%{transform:rotate(-6deg) translateY(-3px)}
+  }
+
+  /* ─── SECTIONS ─── */
+  section{padding:64px 0 12px;position:relative}
+  .sec-head{
+    display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;
+    padding-bottom:14px;border-bottom:5px solid var(--ink);
+    margin-bottom:38px;
+  }
+  .sec-num{
+    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.2em;
+    background:var(--ink);color:var(--paper);padding:4px 10px;
+  }
+  .sec-title{
+    font-family:"DM Serif Display",serif;font-style:italic;font-weight:400;
+    font-size:clamp(42px,7vw,88px);line-height:1;letter-spacing:-.015em;
+    margin:0;
+  }
+  .sec-kicker{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    margin-left:auto;color:var(--muted);
+  }
+
+  /* ─── BIO / INTRO ─── */
+  .bio{
+    display:grid;grid-template-columns:1fr 2.2fr;gap:52px;align-items:start;
+    padding:0 0 20px;
+  }
+  .bio-left{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);border-top:2px solid var(--ink);padding-top:12px;
+  }
+  .bio-left b{color:var(--ink);display:block;margin-bottom:4px}
+  .bio-copy{
+    font-size:clamp(22px,2.4vw,30px);line-height:1.32;
+    font-variation-settings:"wdth" 88,"wght" 500;
+  }
+  .bio-copy u{text-decoration:none;background:linear-gradient(to top,var(--magenta) 0,var(--magenta) 30%,transparent 30%);padding:0 2px}
+  .bio-copy .drop{
+    float:left;font-family:"DM Serif Display",serif;font-style:italic;
+    font-size:120px;line-height:.82;padding:8px 12px 0 0;color:var(--ink);
+  }
+  .bio-copy em{font-family:"DM Serif Display",serif;font-style:italic;color:var(--ink)}
+
+  /* ─── NOW / TAPED NOTE ─── */
+  .now{
+    display:flex;justify-content:center;
+    padding:14px 0 40px;
+  }
+  .now-note{
+    position:relative;
+    background:var(--paper);
+    border:2.5px solid var(--ink);
+    padding:34px 40px 32px;
+    max-width:760px;width:100%;
+    transform:rotate(-1.2deg);
+    box-shadow:8px 8px 0 var(--cyan);
+  }
+  .now-note::before,.now-note::after{
+    content:"";position:absolute;width:110px;height:26px;
+    background:rgba(224,57,140,.35);
+    border:1px dashed rgba(10,10,10,.35);
+    mix-blend-mode:multiply;
+  }
+  .now-note::before{top:-13px;left:20px;transform:rotate(-6deg)}
+  .now-note::after{top:-13px;right:20px;transform:rotate(4deg)}
+  .now-note .stamp{
+    position:absolute;top:-18px;right:-18px;
+    width:82px;height:82px;border-radius:50%;
+    background:transparent;border:2.5px solid var(--magenta);color:var(--magenta);
+    display:grid;place-content:center;text-align:center;
+    font-family:"Space Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+    transform:rotate(12deg);line-height:1.35;
+  }
+  .now-note h3{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+    margin:0 0 14px;color:var(--muted);
+  }
+  .now-note ul{margin:0;padding:0;list-style:none}
+  .now-note li{
+    padding:8px 0;font-size:17px;line-height:1.45;
+    font-variation-settings:"wdth" 90,"wght" 500;
+    display:flex;gap:12px;align-items:flex-start;
+  }
+  .now-note li + li{border-top:1px dashed rgba(10,10,10,.35)}
+  .now-note li::before{
+    content:"→";font-family:"DM Serif Display",serif;font-style:italic;
+    color:var(--magenta);font-size:22px;line-height:1;flex-shrink:0;
+  }
+
+  /* ─── PROJECTS ─── */
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:34px}
+  .poster{
+    position:relative;background:var(--paper);
+    border:3px solid var(--ink);
+    padding:26px 26px 24px;
+    box-shadow:8px 8px 0 var(--magenta);
+    display:flex;flex-direction:column;gap:14px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .poster:hover{transform:translate(-3px,-3px);box-shadow:11px 11px 0 var(--magenta)}
+  .poster:nth-child(2){box-shadow:8px 8px 0 var(--cyan)}
+  .poster:nth-child(2):hover{box-shadow:11px 11px 0 var(--cyan)}
+  .poster:nth-child(3){box-shadow:8px 8px 0 var(--cyan)}
+  .poster:nth-child(3):hover{box-shadow:11px 11px 0 var(--cyan)}
+  .poster:nth-child(4){box-shadow:8px 8px 0 var(--magenta)}
+  .poster:nth-child(4):hover{box-shadow:11px 11px 0 var(--magenta)}
+
+  .poster-top{
+    display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
+    padding-bottom:12px;border-bottom:2px solid var(--ink);
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  }
+  .poster-top .idx{background:var(--ink);color:var(--paper);padding:3px 8px}
+  .poster h4{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-variation-settings:"wdth" 100,"wght" 800;
+    font-size:clamp(30px,3.4vw,44px);line-height:.92;
+    margin:2px 0 0;letter-spacing:-.02em;
+  }
+  .poster .sub{
+    font-family:"DM Serif Display",serif;font-style:italic;
+    font-size:20px;line-height:1.2;color:var(--muted);
+  }
+  .poster p{
+    margin:0;font-size:14.5px;line-height:1.55;
+    font-variation-settings:"wdth" 88,"wght" 500;
+  }
+  .poster p u{
+    text-decoration:none;
+    background:linear-gradient(to top,var(--cyan) 0,var(--cyan) 32%,transparent 32%);
+    padding:0 2px;
+  }
+  .poster .stack{
+    display:flex;flex-wrap:wrap;gap:5px;
+  }
+  .chip{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    padding:3px 8px;border:1.5px solid var(--ink);background:transparent;
+  }
+  .chip.f{background:var(--ink);color:var(--paper)}
+  .poster-links{
+    margin-top:auto;display:flex;gap:14px;flex-wrap:wrap;
+    padding-top:14px;border-top:2px dashed rgba(10,10,10,.35);
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  }
+  .poster-links a{border-bottom:2px solid var(--ink)}
+  .poster-links a:hover{color:var(--magenta);border-bottom-color:var(--magenta)}
+
+  .poster .badge{
+    position:absolute;top:-14px;right:-14px;
+    background:var(--paper);border:2.5px solid var(--ink);
+    font-family:"DM Serif Display",serif;font-style:italic;
+    padding:4px 12px;font-size:16px;
+    transform:rotate(6deg);
+    box-shadow:3px 3px 0 var(--ink);
+  }
+
+  /* ─── OPEN SOURCE STICKERS ─── */
+  .os-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:30px;
+    padding:8px 0 12px;
+  }
+  .os-sticker{
+    position:relative;
+    aspect-ratio:1/1;
+    border:3px solid var(--ink);
+    background:var(--paper);
+    padding:26px 24px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .os-sticker:nth-child(1){border-radius:50%;background:var(--paper)}
+  .os-sticker:nth-child(2){border-radius:24px;background:var(--paper);transform:rotate(2deg)}
+  .os-sticker:nth-child(3){border-radius:50% 12px 50% 12px;background:var(--paper);transform:rotate(-1.5deg)}
+  .os-sticker:nth-child(1) .os-inner{text-align:center}
+  .os-sticker h5{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-variation-settings:"wdth" 100,"wght" 800;
+    font-size:26px;letter-spacing:-.02em;margin:0 0 4px;line-height:.95;
+  }
+  .os-sticker .sub{
+    font-family:"DM Serif Display",serif;font-style:italic;
+    font-size:15px;color:var(--muted);margin-bottom:10px;
+  }
+  .os-sticker p{
+    font-size:13px;line-height:1.5;margin:0 0 10px;
+    font-variation-settings:"wdth" 88,"wght" 500;
+  }
+  .os-sticker .os-links{
+    display:flex;flex-wrap:wrap;gap:6px 10px;
+    font-family:"Space Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  }
+  .os-sticker .os-links a{border-bottom:1.5px solid var(--ink)}
+  .os-sticker .os-links a:hover{color:var(--magenta);border-bottom-color:var(--magenta)}
+  .os-sticker .tag-tl{
+    position:absolute;top:-14px;left:20px;
+    background:var(--magenta);color:var(--paper);
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    padding:3px 10px;transform:rotate(-4deg);
+  }
+  .os-sticker:nth-child(2) .tag-tl{background:var(--cyan);color:var(--ink)}
+  .os-sticker:nth-child(3) .tag-tl{background:var(--ink);color:var(--paper)}
+
+  /* ─── EXPERIENCE (newspaper) ─── */
+  .exp-lede{
+    font-family:"DM Serif Display",serif;font-style:italic;
+    font-size:22px;line-height:1.4;color:var(--muted);
+    max-width:640px;margin-bottom:26px;
+  }
+  .exp-row{
+    display:grid;grid-template-columns:100px 1.4fr 3fr 140px;
+    gap:28px;align-items:start;
+    padding:26px 0;
+    border-top:2px solid var(--ink);
+  }
+  .exp-row:last-child{border-bottom:2px solid var(--ink)}
+  .exp-idx{
+    font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.2em;
+  }
+  .exp-idx b{
+    display:inline-block;background:var(--ink);color:var(--paper);
+    padding:2px 8px;margin-right:6px;
+  }
+  .exp-title{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-variation-settings:"wdth" 96,"wght" 700;
+    font-size:22px;line-height:1.15;letter-spacing:-.015em;margin:0 0 4px;
+  }
+  .exp-company{
+    font-family:"DM Serif Display",serif;font-style:italic;
+    font-size:18px;color:var(--magenta);
+  }
+  .exp-body p{margin:0;font-size:14.5px;line-height:1.6;font-variation-settings:"wdth" 88,"wght" 500}
+  .exp-body .mini-stack{
+    font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:6px;
+  }
+  .exp-date{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    text-align:right;color:var(--muted);
+  }
+  .exp-date .now-tag{
+    display:inline-block;background:var(--magenta);color:var(--paper);
+    padding:2px 6px;margin-top:4px;
+  }
+
+  /* ─── SKILLS CLUSTER ─── */
+  .skills-cluster{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .skill-group{
+    position:relative;background:var(--paper);
+    border:2.5px solid var(--ink);padding:22px 22px 20px;
+    box-shadow:5px 5px 0 var(--ink);
+  }
+  .skill-group:nth-child(2){transform:rotate(-.8deg);box-shadow:5px 5px 0 var(--magenta)}
+  .skill-group:nth-child(4){transform:rotate(.6deg);box-shadow:5px 5px 0 var(--cyan)}
+  .skill-group:nth-child(5){transform:rotate(-.4deg)}
+  .skill-group:nth-child(6){box-shadow:5px 5px 0 var(--magenta)}
+  .skill-group h5{
+    font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+    margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid var(--ink);
+    display:flex;justify-content:space-between;align-items:baseline;
+  }
+  .skill-group h5 span{color:var(--muted);font-size:9.5px}
+  .skill-group ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px 8px}
+  .skill-group li{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-variation-settings:"wdth" 90,"wght" 700;
+    font-size:14.5px;letter-spacing:-.01em;
+  }
+  .skill-group li::after{content:"·";margin-left:8px;color:var(--magenta)}
+  .skill-group li:last-child::after{content:""}
+
+  /* ─── EDUCATION ─── */
+  .cert{
+    max-width:820px;margin:0 auto;
+    background:var(--paper);
+    border:3px double var(--ink);
+    padding:30px 40px;
+    position:relative;
+    box-shadow:0 0 0 5px var(--paper), 0 0 0 8px var(--ink);
+    transform:rotate(-.4deg);
+  }
+  .cert::before,.cert::after{
+    content:"";position:absolute;width:34px;height:34px;
+    border:2px solid var(--ink);border-radius:50%;
+  }
+  .cert::before{top:12px;left:12px;background:var(--magenta)}
+  .cert::after{bottom:12px;right:12px;background:var(--cyan)}
+  .cert-inner{text-align:center;padding:14px 0}
+  .cert-kicker{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.32em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .cert h4{
+    font-family:"DM Serif Display",serif;font-style:italic;font-weight:400;
+    font-size:clamp(30px,4.4vw,52px);line-height:1;letter-spacing:-.01em;
+    margin:8px 0 4px;
+  }
+  .cert .who{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-variation-settings:"wdth" 96,"wght" 700;
+    font-size:22px;letter-spacing:-.01em;
+  }
+  .cert .where{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted);margin-top:10px;
+  }
+  .cert .yr{
+    display:inline-block;margin-top:14px;
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.2em;
+    border:2px solid var(--ink);padding:4px 14px;
+  }
+
+  /* ─── PULL QUOTE ─── */
+  .pull{
+    position:relative;padding:56px 0 32px;text-align:left;
+  }
+  .pull .qm{
+    position:absolute;top:-20px;left:-14px;
+    font-family:"DM Serif Display",serif;font-style:italic;
+    font-size:clamp(220px,32vw,420px);line-height:.8;
+    color:var(--magenta);opacity:.22;
+    pointer-events:none;user-select:none;
+    z-index:0;
+  }
+  .pull blockquote{
+    position:relative;z-index:1;
+    font-family:"DM Serif Display",serif;font-style:italic;
+    font-size:clamp(32px,5.2vw,66px);line-height:1.05;
+    letter-spacing:-.015em;margin:0;max-width:920px;
+  }
+  .pull cite{
+    display:block;margin-top:20px;
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    font-style:normal;color:var(--muted);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact{
+    border-top:6px solid var(--ink);border-bottom:6px solid var(--ink);
+    padding:60px 0;margin-top:32px;position:relative;
+  }
+  .contact .over{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:18px;
+  }
+  .contact h3{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-variation-settings:"wdth" 100,"wght" 800;
+    font-size:clamp(56px,10vw,144px);line-height:.88;letter-spacing:-.04em;
+    margin:0 0 6px;text-transform:lowercase;
+  }
+  .contact h3 em{
+    font-family:"DM Serif Display",serif;font-style:italic;font-weight:400;
+    color:var(--magenta);text-transform:none;
+  }
+  .contact-grid{
+    display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:22px;
+    margin-top:34px;padding-top:22px;border-top:2px solid var(--ink);
+  }
+  .contact-grid .col small{
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+    display:block;margin-bottom:6px;color:var(--muted);
+  }
+  .contact-grid .col a,.contact-grid .col span{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-variation-settings:"wdth" 92,"wght" 700;
+    font-size:17px;letter-spacing:-.01em;word-break:break-word;
+    border-bottom:2px solid var(--ink);
+  }
+  .contact-grid .col a:hover{color:var(--magenta);border-bottom-color:var(--magenta)}
+  .contact .cta-sticker{
+    position:absolute;top:34px;right:0;
+    width:130px;height:130px;border-radius:50%;
+    background:var(--cyan);border:2.5px solid var(--ink);
+    display:grid;place-content:center;text-align:center;
+    font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    padding:14px;line-height:1.3;
+    box-shadow:5px 5px 0 var(--ink);
+    transform:rotate(8deg);
+  }
+  .contact .cta-sticker b{
+    font-family:"DM Serif Display",serif;font-style:italic;font-weight:400;
+    font-size:22px;letter-spacing:0;text-transform:none;display:block;margin-top:4px;
+  }
+
+  /* ─── FOOTER ─── */
+  footer{
+    padding:26px 0 10px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+    font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  footer .col{display:flex;gap:16px;flex-wrap:wrap}
+  footer b{color:var(--ink)}
+  footer .end{
+    font-family:"DM Serif Display",serif;font-style:italic;font-size:20px;
+    color:var(--ink);text-transform:none;letter-spacing:0;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade{opacity:0;transform:translateY(14px);animation:fadeup .7s ease forwards}
+  .fade.d1{animation-delay:.05s}
+  .fade.d2{animation-delay:.15s}
+  .fade.d3{animation-delay:.25s}
+  .fade.d4{animation-delay:.35s}
+  @keyframes fadeup{to{opacity:1;transform:none}}
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width:960px){
+    .wrap{padding:22px 22px 60px}
+    .hero-meta{grid-template-columns:1fr 1fr;gap:22px}
+    .bio{grid-template-columns:1fr;gap:24px}
+    .projects{grid-template-columns:1fr;gap:28px}
+    .os-grid{grid-template-columns:1fr;gap:34px}
+    .os-sticker{aspect-ratio:auto;min-height:220px}
+    .os-sticker:nth-child(1){border-radius:36px}
+    .exp-row{grid-template-columns:1fr;gap:6px;padding:22px 0}
+    .exp-date{text-align:left}
+    .skills-cluster{grid-template-columns:1fr 1fr}
+    .contact-grid{grid-template-columns:1fr 1fr}
+    .contact .cta-sticker{position:static;margin:0 0 18px;transform:rotate(-4deg)}
+    .sticker.hero-sticker{width:110px;height:110px;top:-4px;right:-4px}
+    .sticker.hero-sticker .big{font-size:26px}
+    /* tone down rotations on mobile */
+    .now-note,.os-sticker:nth-child(2),.os-sticker:nth-child(3),
+    .skill-group,.cert{transform:none}
+    .pull .qm{font-size:220px;left:-8px}
+  }
+  @media (max-width:520px){
+    .wrap{padding:18px 16px 40px}
+    .masthead{font-size:9.5px;gap:8px}
+    .hero{padding:34px 0 24px}
+    .hero-meta{grid-template-columns:1fr}
+    .skills-cluster{grid-template-columns:1fr}
+    .contact-grid{grid-template-columns:1fr}
+    .sec-head{flex-direction:column;align-items:flex-start;gap:8px}
+    .sec-kicker{margin-left:0}
+  }
+</style>
+</head>
 <body>
-    <!-- Header -->
-    <header id="header" class="header">
-        <nav class="container">
-            <div class="logo" onclick="scrollToSection('hero')">
-                <span class="terminal-cursor">Khalid_Sherif</span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a onclick="scrollToSection('skills')" class="nav-link">Skills</a></li>
-                <li><a onclick="scrollToSection('projects')" class="nav-link">Projects</a></li>
-                <li><a onclick="scrollToSection('open-source')" class="nav-link">OSC</a></li>
-                <li><a onclick="scrollToSection('experience')" class="nav-link">Experience</a></li>
-                <li><a onclick="scrollToSection('contact')" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="mobile-menu" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-    </header>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <div class="matrix-bg"></div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <div class="terminal-window">
-                        <div class="terminal-header">
-                            <div class="terminal-buttons">
-                                <span class="terminal-button red"></span>
-                                <span class="terminal-button yellow"></span>
-                                <span class="terminal-button green"></span>
-                            </div>
-                            <span class="terminal-title">khalid@portfolio:~$</span>
-                        </div>
-                        <div class="terminal-body">
-                            <div class="terminal-line">
-                                <span class="prompt">$</span>
-                                <span class="command">whoami</span>
-                            </div>
-                            <h1 class="hero-title" id="heroTitle"></h1>
-                            
-                            <div class="terminal-line">
-                                <span class="prompt">$</span>
-                                <span class="command">cat role.txt</span>
-                            </div>
-                            <p class="hero-subtitle neon-glow">Software Engineer</p>
-                            
-                            <div class="terminal-line">
-                                <span class="prompt">$</span>
-                                <span class="command">cat about.md</span>
-                            </div>
-                            <p class="hero-description">
-                               I'm a software engineer with a degree in Computer Science, and a strong passion for front-end development. Over the years, I've built hands-on experience through internships, freelance work, side projects, and open-source contributions. I enjoy crafting clean, user-friendly interfaces and solving complex problems that make people's lives easier. Whether it's developing a sleek UI or diving deep into logic-heavy challenges, I strive to build software that's both beautiful and impactful.
-                            </p>
-                            
-                            <div class="terminal-line">
-                                <span class="prompt">$</span>
-                                <span class="command">cat brief.js</span>
-                            </div>
-                            <div class="code-content">
-                                <p class="code-line">
-                                    <span class="line-number">01</span>
-                                    <span class="keyword">const</span> <span class="variable">developer</span> = {
-                                </p>
-                                <p class="code-line">
-                                    <span class="line-number">02</span>
-                                    &nbsp;&nbsp;<span class="property">name</span>: <span class="string">"Khalid Sherif"</span>,
-                                </p>
-                                <p class="code-line">
-                                    <span class="line-number">03</span>
-                                    &nbsp;&nbsp;<span class="property">role</span>: <span class="string">"Software Engineer"</span>,
-                                </p>
-                                <p class="code-line">
-                                    <span class="line-number">04</span>
-                                    &nbsp;&nbsp;<span class="property">experience</span>: <span class="number">2</span> + <span class="string">" years"</span>,
-                                </p>
-                                <p class="code-line">
-                                    <span class="line-number">05</span>
-                                    &nbsp;&nbsp;<span class="property">passion</span>: <span class="string">"Building innovative solutions"</span>
-                                </p>
-                                <p class="code-line">
-                                    <span class="line-number">06</span>
-                                    };
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="cta-buttons">
-                        <button onclick="scrollToSection('projects')" class="cyber-button">
-                            <span>./view_projects.sh</span>
-                        </button>
-                        <button onclick="scrollToSection('contact')" class="cyber-button secondary">
-                            <span>./contact.sh</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="hero-image">
-                    <div class="profile-container">
-                        <div class="profile-frame">
-                            <img src="./assets/me.jpeg" alt="Khalid Sherif" class="profile-img">
-                            <div class="scan-line"></div>
-                        </div>
-                        <div class="profile-stats">
-                            <div class="stat">
-                                <span class="stat-label">STATUS:</span>
-                                <span class="stat-value online">ONLINE</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">LEVEL:</span>
-                                <span class="stat-value">JUNIOR</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="wrap">
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="section-number">01.</span>
-                <span class="neon-glow">Skills</span>
-            </h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <span class="skill-icon">⚙️</span>
-                        <h3>Technical</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">TypeScript</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Next.js</span>
-                        <span class="skill-tag">Vue.js</span>
-                        <span class="skill-tag">GraphQL</span>
-                        <span class="skill-tag">REST APIs</span>
-                        <span class="skill-tag">Tailwind CSS</span>
-                        <span class="skill-tag">SASS</span>
-                        <span class="skill-tag">Figma</span>
-                        <span class="skill-tag">Git</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <div class="skill-header">
-                        <span class="skill-icon">🎨</span>
-                        <h3>Soft</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Effective Communicator</span>
-                        <span class="skill-tag">Team-Oriented</span>
-                        <span class="skill-tag">Problem Solver</span>
-                        <span class="skill-tag">Detail-Focused</span>
-                        <span class="skill-tag">Adaptable Learner</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="section-number">02.</span>
-                <span class="neon-glow">Featured_Projects</span>
-            </h2>
-            <div class="carousel">
-                <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
-                <div class="carousel-viewport">
-                <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-status">
-                            <span class="status-dot active"></span>
-                            <span>DEPLOYED</span>
-                        </div>
-                        <div class="project-links">
-                            <a target="_blank" href="https://exclusive-app-ecommerce.vercel.app/" class="project-link">DEMO</a>
-                            <a target="_blank" href="https://github.com/Khalid-debugg/SAQAYA-ecommerce-app" class="project-link">GITHUB</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Saqaya E-commerce App</h3>
-                        <p class="project-description">
-                            A modular e-commerce app with reusable components, optimized product discovery flow, and a Jest testing foundation for component reliability.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Vue 3</span>
-                            <span class="tech-tag">TypeScript</span>
-                            <span class="tech-tag">Pinia</span>
-                            <span class="tech-tag">Vue Router 4</span>
-                            <span class="tech-tag">SCSS</span>
-                            <span class="tech-tag">Jest</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-status">
-                            <span class="status-dot active"></span>
-                            <span>DEPLOYED</span>
-                        </div>
-                        <div class="project-links">
-                            <a target="_blank" href="https://dumbbellflow-landing.vercel.app" class="project-link">DEMO</a>
-                            <a target="_blank" href="https://github.com/Khalid-debugg/dumbbell-flow-landing" class="project-link">CODE</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Dumbbell Flow</h3>
-                        <p class="project-description">
-                            A landing page for the Dumbbell Flow fitness app with internationalization support and a modern design.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Next.js</span>
-                            <span class="tech-tag">TypeScript</span>
-                            <span class="tech-tag">TailwindCSS</span>
-                            <span class="tech-tag">Prisma</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-status">
-                            <span class="status-dot active"></span>
-                            <span>DEPLOYED</span>
-                        </div>
-                        <div class="project-links">
-                            <a  target="_blank" href="https://fora-orpin.vercel.app/" class="project-link">DEMO</a>
-                            <a  target="_blank" href="https://github.com/Khalid-debugg/FORA" class="project-link">GITHUB</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">FORA</h3>
-                        <p class="project-description">
-                            A Social media platform for the football community and a solution for gathering players to enjoy their time playing football
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">ReactQuery</span>
-                            <span class="tech-tag">TailwindCSS</span>
-                            <span class="tech-tag">Appwrite</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-status">
-                            <span class="status-dot active"></span>
-                            <span>DEPLOYED</span>
-                        </div>
-                        <div class="project-links">
-                            <a  target="_blank" href="https://my-dream-place-lac.vercel.app/" class="project-link">DEMO</a>
-                            <a  target="_blank" href="https://github.com/Khalid-debugg/My-Dream-Place" class="project-link">GITHUB</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">My Dream Place</h3>
-                        <p class="project-description">
-                            A hotel booking website that allows users to search and explore hotel rooms effortlessly. It features an intuitive interface with advanced search filters.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Vue.js</span>
-                            <span class="tech-tag">Pinia</span>
-                            <span class="tech-tag">REST API</span>
-                            <span class="tech-tag">TailwindCSS</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                </div>
-                <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
-            </div>
-            <div class="carousel-dots"></div>
-        </div>
-    </section>
-    <!-- OSC Section -->
-    <section id="open-source" class="projects">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="section-number">03.</span>
-                <span class="neon-glow">Open_Source_Contributions</span>
-            </h2>
-            <div class="carousel">
-                <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
-                <div class="carousel-viewport">
-                <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-status">
-                            <span class="status-dot active"></span>
-                            <span>DEPLOYED</span>
-                        </div>
-                        <div class="project-links">
-                            <a  target="_blank" href="https://www.codecademy.com/resources/docs/lua/mathematical-library/max" class="project-link">DEMO 1</a>
-                            <a  target="_blank" href="https://www.codecademy.com/resources/docs/lua/mathematical-library/mininteger" class="project-link">DEMO 2</a>
-                            <a  target="_blank" href="https://www.codecademy.com/resources/docs/css/display" class="project-link">DEMO 3</a>
-                            <a  target="_blank" href="https://github.com/Codecademy/docs" class="project-link">CODE</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Codecademy</h3>
-                        <p class="project-description">
-                         Contributed to the docs and clarified some features of Lua programming language and fixed a typo in display feature in CSS.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">md</span>
-                            <span class="tech-tag">Lua</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-status">
-                            <span class="status-dot active"></span>
-                            <span>DEPLOYED</span>
-                        </div>
-                        <div class="project-links">
-                            <a target="_blank" href="https://postiz.com/" class="project-link">DEMO</a>
-                            <a target="_blank" href="https://github.com/gitroomhq/postiz-app" class="project-link">CODE</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Postiz App</h3>
-                        <p class="project-description">
-                            Synced registration button with the logic, and fixed UI conflicts
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">JavaScript</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-status">
-                            <span class="status-dot active"></span>
-                            <span>DEPLOYED</span>
-                        </div>
-                        <div class="project-links">
-                            <a target="_blank" href="https://github.com/illacloud/illa-builder" class="project-link">CODE</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Illa builder</h3>
-                        <p class="project-description">
-                            Created an AI agent that generates stories with maximum 1000 words based on the title.
-                        </p>
-                        <div class="project-tech">
-                            <span class="tech-tag">md</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                </div>
-                <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
-            </div>
-            <div class="carousel-dots"></div>
-        </div>
-    </section>
+  <!-- ─── MASTHEAD ─── -->
+  <div class="masthead">
+    <div class="lot">
+      <span><b>ZINE №08</b></span>
+      <span>Vol. Anti-Hero</span>
+      <span>Riso Print / Cream Stock</span>
+    </div>
+    <div class="lot">
+      <span><span class="dot"></span>Cairo · Egypt</span>
+      <span>2026 Edition</span>
+    </div>
+  </div>
 
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="section-number">04.</span>
-                <span class="neon-glow">Work_Experience</span>
-            </h2>
-            <div class="experience-timeline">
-                <div class="experience-item">
-                    <div class="experience-date">Mar 2026 - Apr 2026</div>
-                    <div class="experience-content">
-                        <div class="experience-header">
-                            <h3 class="experience-title">Frontend Engineer Intern</h3>
-                            <span class="experience-company">Saqaya</span>
-                        </div>
-                        <p class="experience-description">
-                            Led the migration of a legacy codebase from Vue 2 to Vue 3, upgrading the architecture for improved performance and maintainability. Refactored state management from Vuex to Pinia and upgraded Vue Router 3 to 4, aligning with modern Vue ecosystem best practices. Implemented unit tests using Jest to ensure component reliability and prevent regressions across core features.
-                        </p>
-                        <div class="experience-achievements">
-                            <span class="achievement">Vue 2 to Vue 3 Migration</span>
-                            <span class="achievement">State Management Refactoring</span>
-                            <span class="achievement">Unit Testing with Jest</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="experience-item">
-                    <div class="experience-date">Jul 2025 - Aug 2025</div>
-                    <div class="experience-content">
-                        <div class="experience-header">
-                            <h3 class="experience-title">Front end engineer intern</h3>
-                            <span class="experience-company">Halan</span>
-                        </div>
-                        <p class="experience-description">
-                           During my internship, I contributed to a dedicated project called Mini Neuron and collaborated on live product features using Git and Pull Requests within a structured branching workflow. I developed UI components with React, TypeScript, Ant Design, and React Query, ensuring consistency with design systems and delivery standards. This experience strengthened my collaborative development skills through active participation in code reviews, agile sprints, and technical discussions.
-                        </p>
-                        <div class="experience-achievements">
-                            <span class="achievement">React & TypeScript Development</span>
-                            <span class="achievement">Git-Based Collaboration</span>
-                            <span class="achievement">Agile Software Engineering</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="experience-item">
-                    <div class="experience-date">Apr 2024 - Jun 2024</div>
-                    <div class="experience-content">
-                        <div class="experience-header">
-                            <h3 class="experience-title">Front end developer</h3>
-                            <span class="experience-company">Infantry house</span>
-                        </div>
-                        <p class="experience-description">
-                           I designed and developed a custom ERP system aimed at streamlining and managing interdepartmental business processes. I worked closely with clients to gather and understand their unique business requirements, enabling me to tailor effective software solutions to their specific needs. Throughout the project, I collaborated with senior developers and gained valuable hands-on experience, particularly in resolving complex version control challenges in a real-world development environment.
-                        </p>
-                        <div class="experience-achievements">
-                            <span class="achievement">Frontend architecture</span>
-                            <span class="achievement">Cross-functional collaboration</span>
-                            <span class="achievement">User experience focus</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="experience-item">
-                    <div class="experience-date">Oct 2023 - Dec 2023</div>
-                    <div class="experience-content">
-                        <div class="experience-header">
-                            <h3 class="experience-title">Frontend Developer Intern</h3>
-                            <span class="experience-company">Algoriza</span>
-                        </div>
-                        <p class="experience-description">
-                            Built responsive web interfaces using React and modern CSS frameworks. 
-                            Gained experience in agile development and version control workflows.
-                        </p>
-                        <div class="experience-achievements">
-                            <span class="achievement">VueJS</span>
-                            <span class="achievement">WebPerformanceOptimization</span>
-                            <span class="achievement">Agile methodology</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- ─── HERO ─── -->
+  <header class="hero">
+    <div class="tag-row">
+      <span>Portfolio / Frontend Engineer</span>
+      <span>Filed under: interfaces that feel calm</span>
+    </div>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="section-number">05.</span>
-                <span class="neon-glow">Get_In_Touch</span>
-            </h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="terminal-contact">
-                        <div class="terminal-header">
-                            <span class="terminal-title">contact.sh</span>
-                        </div>
-                        <div class="terminal-body">
-                            <div class="contact-item">
-                                <span class="contact-label">EMAIL:</span>
-                                <span class="contact-value">khalidsherif.dev@gmail.com</span>
-                            </div>
-                            <div class="contact-item">
-                                <span class="contact-label">LOCATION:</span>
-                                <span class="contact-value">Nasr city, Cairo ,Egypt</span>
-                            </div>
-                            <div class="contact-item">
-                                <span class="contact-label">LINKEDIN:</span>
-                                <span class="contact-value"><a target="_blank" href="https://www.linkedin.com/in/khalidsherif1/" style="color: var(--primary);text-decoration: none;">linkedin.com/in/khalidsherif1</a></span>
-                            </div>
-                            <div class="contact-item">
-                                <span class="contact-label">GITHUB:</span>
-                                <span class="contact-value"><a target="_blank" href="https://github.com/Khalid-debugg" style="color: var(--primary);text-decoration: none;">github.com/Khalid-debugg</a></span>
-                            </div>
-                            <div class="contact-item">
-                                <span class="contact-label">STATUS:</span>
-                                <span class="contact-value online">AVAILABLE FOR HIRE</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <form class="contact-form" id="contactForm">
-                    <div class="form-header">
-                        <span class="form-title">Send_Message.exe</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="name">NAME:</label>
-                        <input type="text" id="name" name="name" placeholder="Enter your name..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">EMAIL:</label>
-                        <input type="email" id="email" name="email" placeholder="your.email@domain.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">SUBJECT:</label>
-                        <input type="text" id="subject" name="subject" placeholder="What's this about?" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">MESSAGE:</label>
-                        <textarea id="message" name="message" rows="5" placeholder="Your message here..." required></textarea>
-                    </div>
-                    <button type="submit" class="cyber-button submit-btn">
-                        <span>EXECUTE_SEND</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
+    <h1 class="fade d1">
+      khalid<span class="amp">&amp;</span><br />
+      <span class="strike">sherif</span>
+    </h1>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2026 Khalid Sherif. All rights reserved.</p>
-                <p class="footer-subtitle">Built with ❤️ and lots of coffee in the terminal</p>
-            </div>
-        </div>
-    </footer>
+    <p class="role fade d2">a <em>frontend engineer</em> who ships <br> things that age well.</p>
 
-    <script src="script.js"></script>
+    <div class="sticker hero-sticker" aria-hidden="true">
+      Open for
+      <span class="big">work</span>
+      2026 · remote OK
+    </div>
+
+    <div class="hero-meta fade d3">
+      <div class="col">
+        <small>The Byline</small>
+        <p>Two years in production. React, Vue 3, Next.js. Currently at ComplyMarket, shipping a Next.js refactor and quietly supporting an ISO 27001 push.</p>
+      </div>
+      <div class="col">
+        <small>Where</small>
+        <p>Nasr City, Cairo, Egypt.<br />Working with teams anywhere.</p>
+      </div>
+      <div class="col">
+        <small>Say hi</small>
+        <p><a href="mailto:khalidsherif.dev@gmail.com">khalidsherif.dev@gmail.com</a><br />+20 115 536 6432</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── BIO / INTRO ─── -->
+  <section id="intro">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">the intro,<br />in one breath.</h2>
+      <span class="sec-kicker">§ read slowly</span>
+    </div>
+    <div class="bio">
+      <aside class="bio-left">
+        <b>File:</b> bio.txt<br />
+        <b>Length:</b> one paragraph<br />
+        <b>Mood:</b> plainspoken<br />
+        <b>Repeat readings:</b> encouraged
+      </aside>
+      <p class="bio-copy">
+        <span class="drop">F</span>rontend engineer with <u>two years of production experience</u> across React, Vue 3, and Next.js. Currently at <em>ComplyMarket</em> — leading a Next.js refactor and supporting the company's ISO 27001 certification. Previously at <em>Saqaya</em> (Vue 2 → 3), <em>Halan</em>, <em>Infantry House</em>, and <em>Algoriza</em>. I care about interfaces that feel <u>calm to use</u> and code that <u>ages well</u>. Based in Cairo, working with teams anywhere.
+      </p>
+    </div>
+  </section>
+
+  <hr class="rule" />
+
+  <!-- ─── NOW ─── -->
+  <section id="now">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">what now, exactly.</h2>
+      <span class="sec-kicker">§ taped to the fridge</span>
+    </div>
+    <div class="now">
+      <div class="now-note">
+        <span class="stamp">Aug<br />2026<br />live</span>
+        <h3>// currently ///////////</h3>
+        <ul>
+          <li>Building a compliance platform frontend at ComplyMarket.</li>
+          <li>Shipping a refactor across a 3,900-line Next.js codebase.</li>
+          <li>Maintaining DumbbellFlow in production at a gym in Cairo.</li>
+          <li>Exploring agentic dev workflows with Claude Code.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS ─── -->
+  <section id="projects">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">selected <em>work.</em></h2>
+      <span class="sec-kicker">§ four posters, hung crooked</span>
+    </div>
+
+    <div class="projects">
+
+      <!-- 1 SAQAYA -->
+      <article class="poster">
+        <span class="badge">new / 26</span>
+        <div class="poster-top">
+          <span class="idx">Poster 01</span>
+          <span>E-commerce / Storefront</span>
+        </div>
+        <h4>Saqaya</h4>
+        <div class="sub">a storefront, reassembled.</div>
+        <p>A modular e-commerce frontend with a reusable component library and <u>strict UI/data separation</u>. Designed a client-side prefetching strategy that shortens perceived load on catalog-heavy pages. Unit tests written in Jest.</p>
+        <div class="stack">
+          <span class="chip f">Vue 3</span><span class="chip">TypeScript</span><span class="chip">Pinia</span><span class="chip">Vue Router 4</span><span class="chip">SCSS</span><span class="chip">Jest</span>
+        </div>
+        <div class="poster-links">
+          <a href="https://exclusive-app-ecommerce.vercel.app/" target="_blank" rel="noopener">Live ↗</a>
+          <a href="https://github.com/Khalid-debugg/SAQAYA-ecommerce-app" target="_blank" rel="noopener">Source ↗</a>
+        </div>
+      </article>
+
+      <!-- 2 DUMBBELLFLOW -->
+      <article class="poster">
+        <span class="badge">in prod</span>
+        <div class="poster-top">
+          <span class="idx">Poster 02</span>
+          <span>Desktop / Gym Mgmt</span>
+        </div>
+        <h4>DumbbellFlow</h4>
+        <div class="sub">local-first, gym-tough.</div>
+        <p>A desktop application in <u>daily production use at a real gym in Cairo</u>. Manages members, subscriptions, and analytics. Local-first architecture with offline support, automated backup &amp; restore, and expiry notifications that fire without a server.</p>
+        <div class="stack">
+          <span class="chip f">Electron</span><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">SQLite</span><span class="chip">Tailwind</span><span class="chip">shadcn/ui</span>
+        </div>
+        <div class="poster-links">
+          <a href="https://dumbbellflow-landing.vercel.app" target="_blank" rel="noopener">Landing ↗</a>
+          <a href="https://github.com/Khalid-debugg/dumbbell-flow-landing" target="_blank" rel="noopener">Source ↗</a>
+        </div>
+      </article>
+
+      <!-- 3 FORA -->
+      <article class="poster">
+        <span class="badge">social</span>
+        <div class="poster-top">
+          <span class="idx">Poster 03</span>
+          <span>Full-stack / Community</span>
+        </div>
+        <h4>FORA</h4>
+        <div class="sub">a place for pickup games.</div>
+        <p>A social platform for the football community — <u>a way for players to find pickup matches</u> and each other. Full-stack build with React Query on the client and Appwrite on the backend.</p>
+        <div class="stack">
+          <span class="chip f">React</span><span class="chip">React Query</span><span class="chip">Tailwind</span><span class="chip">Appwrite</span>
+        </div>
+        <div class="poster-links">
+          <a href="https://fora-orpin.vercel.app/" target="_blank" rel="noopener">Live ↗</a>
+          <a href="https://github.com/Khalid-debugg/FORA" target="_blank" rel="noopener">Source ↗</a>
+        </div>
+      </article>
+
+      <!-- 4 MY DREAM PLACE -->
+      <article class="poster">
+        <span class="badge">travel</span>
+        <div class="poster-top">
+          <span class="idx">Poster 04</span>
+          <span>Hotel Booking / UX</span>
+        </div>
+        <h4>My Dream Place</h4>
+        <div class="sub">the clean-state discipline.</div>
+        <p>A hotel-booking interface with advanced filters and a considered search experience — <u>proof of what a lean Vue 3 codebase can do</u> when the state layer stays clean and components stay small.</p>
+        <div class="stack">
+          <span class="chip f">Vue 3</span><span class="chip">Pinia</span><span class="chip">REST</span><span class="chip">Tailwind</span>
+        </div>
+        <div class="poster-links">
+          <a href="https://my-dream-place-lac.vercel.app/" target="_blank" rel="noopener">Live ↗</a>
+          <a href="https://github.com/Khalid-debugg/My-Dream-Place" target="_blank" rel="noopener">Source ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ─── PULL QUOTE ─── -->
+  <div class="pull">
+    <span class="qm" aria-hidden="true">"</span>
+    <blockquote>
+      Interfaces that feel calm to use.<br />Code that ages well. That's the whole thing.
+    </blockquote>
+    <cite>— editor's note</cite>
+  </div>
+
+  <!-- ─── OPEN SOURCE ─── -->
+  <section id="oss">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">open source, in <em>the margins.</em></h2>
+      <span class="sec-kicker">§ three stickers</span>
+    </div>
+
+    <div class="os-grid">
+
+      <div class="os-sticker">
+        <span class="tag-tl">Docs · 2024</span>
+        <div class="os-inner">
+          <h5>Codecademy</h5>
+          <div class="sub">Lua &amp; CSS entries</div>
+          <p>Clarified entries in Lua's mathematical library and corrected a typo in the CSS display reference.</p>
+        </div>
+        <div class="os-links">
+          <a href="https://www.codecademy.com/resources/docs/lua/mathematical-library/max" target="_blank" rel="noopener">math.max ↗</a>
+          <a href="https://www.codecademy.com/resources/docs/lua/mathematical-library/mininteger" target="_blank" rel="noopener">mininteger ↗</a>
+          <a href="https://www.codecademy.com/resources/docs/css/display" target="_blank" rel="noopener">css/display ↗</a>
+        </div>
+      </div>
+
+      <div class="os-sticker">
+        <span class="tag-tl">PR · 2024</span>
+        <div class="os-inner">
+          <h5>Postiz</h5>
+          <div class="sub">registration &amp; UI fixes</div>
+          <p>Wired the registration button to its underlying logic and resolved small UI conflicts in the open-source social scheduler.</p>
+        </div>
+        <div class="os-links">
+          <a href="https://postiz.com/" target="_blank" rel="noopener">postiz.com ↗</a>
+          <a href="https://github.com/gitroomhq/postiz-app" target="_blank" rel="noopener">repo ↗</a>
+        </div>
+      </div>
+
+      <div class="os-sticker">
+        <span class="tag-tl">PR · 2024</span>
+        <div class="os-inner">
+          <h5>ILLA Builder</h5>
+          <div class="sub">AI agent contribution</div>
+          <p>Contributed an AI agent that generates short stories capped at 1,000 words from a title prompt.</p>
+        </div>
+        <div class="os-links">
+          <a href="https://github.com/illacloud/illa-builder" target="_blank" rel="noopener">illa-builder ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── EXPERIENCE ─── -->
+  <section id="experience">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2 class="sec-title">the résumé, <em>reset in lead.</em></h2>
+      <span class="sec-kicker">§ chronological, mostly</span>
+    </div>
+
+    <p class="exp-lede">Five posts. Each one taught me one specific thing about shipping software with other humans.</p>
+
+    <div class="exp-list">
+
+      <div class="exp-row">
+        <div class="exp-idx"><b>01</b></div>
+        <div>
+          <h3 class="exp-title">Junior Frontend Developer</h3>
+          <div class="exp-company">ComplyMarket</div>
+        </div>
+        <div class="exp-body">
+          <div class="mini-stack">Next.js · Redux RTK · TanStack Query</div>
+          <p>Building a Next.js compliance platform with Redux RTK and TanStack Query. Built and maintained a frontend risk register covering 47 risks across the SDLC, supporting the company's ISO 27001 certification. Authored a refactor plan for a 3,900-line codebase to eliminate duplicated components and unify state management. Introduced Claude-Code-based agentic workflows for review, trimming turnaround by ~30% over two months.</p>
+        </div>
+        <div class="exp-date">jun 2025 →<br />present<br /><span class="now-tag">now</span></div>
+      </div>
+
+      <div class="exp-row">
+        <div class="exp-idx"><b>02</b></div>
+        <div>
+          <h3 class="exp-title">Frontend Engineer, Intern</h3>
+          <div class="exp-company">Saqaya</div>
+        </div>
+        <div class="exp-body">
+          <div class="mini-stack">Vue 2 → 3 · Pinia · Vue Router · Jest</div>
+          <p>Led migration of a legacy codebase from Vue 2 to Vue 3. Refactored Vuex → Pinia, upgraded Vue Router 3 → 4, and wrote unit tests in Jest to protect core features from regression.</p>
+        </div>
+        <div class="exp-date">mar — apr<br />2026</div>
+      </div>
+
+      <div class="exp-row">
+        <div class="exp-idx"><b>03</b></div>
+        <div>
+          <h3 class="exp-title">Frontend Engineer, Intern</h3>
+          <div class="exp-company">Halan</div>
+        </div>
+        <div class="exp-body">
+          <div class="mini-stack">React · TypeScript · Design Systems</div>
+          <p>Shipped 20+ production features for a simulation platform, owning each from ticket scoping to review sign-off. Built accessible components inside an established design system.</p>
+        </div>
+        <div class="exp-date">jul — aug<br />2025</div>
+      </div>
+
+      <div class="exp-row">
+        <div class="exp-idx"><b>04</b></div>
+        <div>
+          <h3 class="exp-title">Frontend Developer</h3>
+          <div class="exp-company">Infantry House</div>
+        </div>
+        <div class="exp-body">
+          <div class="mini-stack">Custom ERP · Client work · Version control</div>
+          <p>Designed and built a custom ERP system for managing interdepartmental processes. Worked directly with clients on requirements and with senior developers on the harder version-control problems.</p>
+        </div>
+        <div class="exp-date">apr — jun<br />2024</div>
+      </div>
+
+      <div class="exp-row">
+        <div class="exp-idx"><b>05</b></div>
+        <div>
+          <h3 class="exp-title">Frontend Developer, Intern</h3>
+          <div class="exp-company">Algoriza</div>
+        </div>
+        <div class="exp-body">
+          <div class="mini-stack">React · Modern CSS · Agile</div>
+          <p>Built responsive web interfaces in React and modern CSS. First real education in agile workflows and version-control discipline.</p>
+        </div>
+        <div class="exp-date">oct — dec<br />2023</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── SKILLS ─── -->
+  <section id="skills">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <h2 class="sec-title">the <em>toolshed.</em></h2>
+      <span class="sec-kicker">§ grouped for legibility</span>
+    </div>
+
+    <div class="skills-cluster">
+      <div class="skill-group">
+        <h5>Languages <span>§ 01</span></h5>
+        <ul><li>JavaScript</li><li>TypeScript</li><li>HTML</li><li>CSS</li></ul>
+      </div>
+      <div class="skill-group">
+        <h5>Frameworks <span>§ 02</span></h5>
+        <ul><li>React</li><li>Vue 3</li><li>Next.js</li><li>Node.js</li><li>Electron</li></ul>
+      </div>
+      <div class="skill-group">
+        <h5>State / Data <span>§ 03</span></h5>
+        <ul><li>Redux RTK</li><li>Zustand</li><li>Pinia</li><li>Vuex</li><li>TanStack Query</li><li>REST</li></ul>
+      </div>
+      <div class="skill-group">
+        <h5>Styling <span>§ 04</span></h5>
+        <ul><li>Tailwind</li><li>SCSS</li><li>shadcn/ui</li><li>MUI</li><li>Ant Design</li></ul>
+      </div>
+      <div class="skill-group">
+        <h5>Quality <span>§ 05</span></h5>
+        <ul><li>Jest</li><li>Vue Test Utils</li><li>ESLint</li><li>Prettier</li><li>i18n</li></ul>
+      </div>
+      <div class="skill-group">
+        <h5>Infra <span>§ 06</span></h5>
+        <ul><li>Git</li><li>Docker</li><li>GKE (GCP)</li><li>GitHub Actions</li><li>Vite</li><li>Vercel</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── EDUCATION ─── -->
+  <section id="education">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <h2 class="sec-title">the paper <em>trail.</em></h2>
+      <span class="sec-kicker">§ one certificate</span>
+    </div>
+    <div class="cert">
+      <div class="cert-inner">
+        <div class="cert-kicker">— This is to certify that —</div>
+        <h4>Bachelor of CIS</h4>
+        <div class="who">Scientific Computing</div>
+        <div class="where">Ain Shams University · Abbasia, Cairo</div>
+        <span class="yr">2019 — 2023</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact" class="contact">
+    <div class="cta-sticker">
+      Let's<br /><b>talk</b><br />in 2026
+    </div>
+    <div class="over">§ 08 — Colophon &amp; Contact</div>
+    <h3>send a<br /><em>letter,</em> please.</h3>
+
+    <div class="contact-grid">
+      <div class="col">
+        <small>Email</small>
+        <a href="mailto:khalidsherif.dev@gmail.com">khalidsherif.dev@gmail.com</a>
+      </div>
+      <div class="col">
+        <small>Phone</small>
+        <a href="tel:+201155366432">+20 115 536 6432</a>
+      </div>
+      <div class="col">
+        <small>LinkedIn</small>
+        <a href="https://linkedin.com/in/khalidsherif1" target="_blank" rel="noopener">in/khalidsherif1</a>
+      </div>
+      <div class="col">
+        <small>GitHub</small>
+        <a href="https://github.com/Khalid-debugg" target="_blank" rel="noopener">@Khalid-debugg</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="col">
+      <span><b>© 2026</b> · Khalid Sherif</span>
+      <span>Set in Bricolage Grotesque, DM Serif Display &amp; Space Mono</span>
+    </div>
+    <div class="col">
+      <span class="end">— fin —</span>
+      <span>Zine №08 · Anti-Hero</span>
+    </div>
+  </footer>
+
+</div>
+
 </body>
 </html>
